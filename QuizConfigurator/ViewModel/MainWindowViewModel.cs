@@ -1,4 +1,5 @@
-﻿using QuizConfigurator.Model;
+﻿using QuizConfigurator.Command;
+using QuizConfigurator.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,8 @@ namespace QuizConfigurator.ViewModel
         public PlayerViewModel PlayerViewModel { get; }
         public ConfigurationViewModel ConfigurationViewModel { get; }
 
+        public DelegateCommand ExitProgramCommand { get; }
+
         public QuestionPackViewModel? ActivePack
         {
             get => _activePack;
@@ -29,7 +32,14 @@ namespace QuizConfigurator.ViewModel
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
             ActivePack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
-        }
 
+            ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
+        }
+        public bool CanExitProgram(object? arg) => true;
+
+        public void ExitProgram(object obj)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

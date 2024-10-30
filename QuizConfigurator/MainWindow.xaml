@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:QuizConfigurator"
         xmlns:view="clr-namespace:QuizConfigurator.View"
         mc:Ignorable="d"
-        Title="Quiz Configurator" Height="500" Width="800">
+        Title="Quiz Configurator" Height="500" Width="800"
+        MinWidth="710"
+        MinHeight="450">
     <Window.InputBindings>
         <!--<KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding PlayerViewModel.UpdateButtonCommand}" />-->
     </Window.InputBindings>
