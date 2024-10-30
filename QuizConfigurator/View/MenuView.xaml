@@ -29,7 +29,8 @@
                 <Separator />
 
                 <MenuItem Header="E_xit"
-                          Command="{Binding ExitProgramCommand}"/>
+                          Command="{Binding ExitProgramCommand}"
+                          InputGestureText="Alt+F4"/>
 
             </MenuItem>
 

@@ -18,7 +18,11 @@ namespace QuizConfigurator.Model
             Name = name;
             Difficulty = difficulty;
             TimeLimitInSeconds = timeLimitInSeconds;
-            Questions = new List<Question>();
+
+            Question question = new Question("What color is the sky?", "blue", "green", "purple", "carrot");
+            Question question2 = new Question("How do you spell dog?", "dog", "caterpillar", "swan", "carrot");
+
+            Questions = new List<Question>() { question, question2 };
         }
     }
 }

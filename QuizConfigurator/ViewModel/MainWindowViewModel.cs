@@ -31,7 +31,7 @@ namespace QuizConfigurator.ViewModel
         {
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
-            ActivePack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
+            ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
 
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
         }
