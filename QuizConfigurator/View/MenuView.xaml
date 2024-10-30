@@ -17,7 +17,7 @@
                 <MenuItem Header="_Select Question Pack">
                     <MenuItem Header="Default Question Pack (Easy)" />
                 </MenuItem>
-e
+
                 <MenuItem Header="_Delete Question Pack" />
 
                 <Separator />
