@@ -19,6 +19,7 @@ namespace QuizConfigurator.ViewModel
             set
             {
                 model.Name = value;
+                RaisePropertyChanged();
             }
         }
         public Difficulty Difficulty
@@ -27,6 +28,7 @@ namespace QuizConfigurator.ViewModel
             set
             {
                 model.Difficulty = value;
+                RaisePropertyChanged();
             }
         }
         public int TimeLimitInSeconds

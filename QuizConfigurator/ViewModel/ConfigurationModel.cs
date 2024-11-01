@@ -10,6 +10,8 @@ namespace QuizConfigurator.ViewModel
     internal class ConfigurationViewModel : ViewModelBase
     {
         private readonly MainWindowViewModel? mainWindowViewModel;
+        public string? ActivePackName => mainWindowViewModel?.ActivePack?.Name;
+
         public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
