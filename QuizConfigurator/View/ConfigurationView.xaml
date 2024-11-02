@@ -24,7 +24,8 @@
         <ListBox Grid.Row="1" Grid.Column="0" x:Name="listbox"
                  Margin="6, 0, 6, 6"
                  Grid.RowSpan="2"
-                 ItemsSource="{Binding ActivePack.Questions}">
+                 ItemsSource="{Binding ActivePack.Questions}"
+                 SelectedItem="{Binding ConfigurationViewModel.SelectedQuestion}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
@@ -67,7 +68,9 @@
             <TextBox x:Name="questionTextBox"
                      Margin="20, -3, 20, 40"
                      Height="70"
-                     Text="New Question">
+                     Text="{Binding ConfigurationViewModel.SelectedQuestion.Query, 
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
             
             <!--Correct Answer-->
@@ -77,7 +80,10 @@
                    FontWeight="Bold">
             </Label>
             <TextBox x:Name="correctAnswerTextBox"
-                     Margin="20, -3, 20, 5">
+                     Margin="20, -3, 20, 5"
+                     Text="{Binding ConfigurationViewModel.SelectedQuestion.CorrectAnswer,
+                            Mode=TwoWay, 
+                            UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
             
             <!--Incorrect Answer 1-->
@@ -87,7 +93,10 @@
                    FontWeight="Bold">
             </Label>
             <TextBox x:Name="incorrectAnswerTextBox1"
-                Margin="20, -3, 20, 5">
+                     Margin="20, -3, 20, 5"
+                     Text="{Binding ConfigurationViewModel.SelectedQuestion.IncorrectAnswer1, 
+                            Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <!--Incorrect Answer 2-->
@@ -97,7 +106,10 @@
                    FontWeight="Bold">
             </Label>
             <TextBox x:Name="incorrectAnswerTextBox2"
-                     Margin="20, -3, 20, 5">
+                     Margin="20, -3, 20, 5"
+                     Text="{Binding ConfigurationViewModel.SelectedQuestion.IncorrectAnswer2, 
+                            Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <!--Incorrect Answer 3-->
@@ -107,7 +119,10 @@
                    FontWeight="Bold">
             </Label>
             <TextBox x:Name="incorrectAnswerTextBox3"
-                     Margin="20, -3, 20, 5">
+                     Margin="20, -3, 20, 5"
+                     Text="{Binding ConfigurationViewModel.SelectedQuestion.IncorrectAnswer3, 
+                            Mode=TwoWay,
+                            UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
         </StackPanel>
     </Grid>

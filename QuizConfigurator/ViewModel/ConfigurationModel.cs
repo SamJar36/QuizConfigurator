@@ -1,4 +1,5 @@
 ﻿using QuizConfigurator.Command;
+using QuizConfigurator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,18 @@ namespace QuizConfigurator.ViewModel
     internal class ConfigurationViewModel : ViewModelBase
     {
         private readonly MainWindowViewModel? mainWindowViewModel;
+
+        private Question _selectedQuestion;
+
+        public Question SelectedQuestion
+        {
+            get => _selectedQuestion;
+            set
+            {
+                _selectedQuestion = value;
+                RaisePropertyChanged();
+            }
+        }
         public string? ActivePackName => mainWindowViewModel?.ActivePack?.Name;
 
         public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
