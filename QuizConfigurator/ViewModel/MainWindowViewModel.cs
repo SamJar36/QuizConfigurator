@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using QuizConfigurator.View;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -18,6 +19,7 @@ namespace QuizConfigurator.ViewModel
         public ConfigurationViewModel ConfigurationViewModel { get; }
 
         public DelegateCommand ExitProgramCommand { get; }
+        public DelegateCommand OpenPackOptionsWindowCommand { get; }
 
         public QuestionPackViewModel? ActivePack
         {
@@ -35,12 +37,19 @@ namespace QuizConfigurator.ViewModel
             ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
 
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
+            OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
         }
         public bool CanExitProgram(object? arg) => true;
 
         public void ExitProgram(object obj)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+        public bool CanOpenOptions(object? arg) => true;
+        public void OpenOptions(object obj)
+        {
+            PackOptionsView options = new PackOptionsView();
+            options.ShowDialog();
         }
     }
 }

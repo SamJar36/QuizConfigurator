@@ -17,6 +17,7 @@ namespace QuizConfigurator.ViewModel
         private Question _selectedQuestion;
 
         public DelegateCommand AddQuestionCommand { get; }
+        public DelegateCommand RemoveQuestionCommand { get; }
 
         public Question SelectedQuestion
         {
@@ -34,12 +35,18 @@ namespace QuizConfigurator.ViewModel
             this.mainWindowViewModel = mainWindowViewModel;
 
             AddQuestionCommand = new DelegateCommand(AddQuestion, CanAddQuestion);
+            RemoveQuestionCommand = new DelegateCommand(RemoveQuestion, CanRemoveQuestion);
         }
         public bool CanAddQuestion(object? arg) => true;
         public void AddQuestion(object obj)
         {
             mainWindowViewModel.ActivePack.Questions.Add(new Question("New Question", "", "", "", ""));
             //RaisePropertyChanged();
+        }
+        public bool CanRemoveQuestion(object? arg) => mainWindowViewModel.ActivePack.Questions.Count > 0;
+        public void RemoveQuestion(object? obj)
+        {
+            mainWindowViewModel.ActivePack.Questions.Remove(SelectedQuestion);
         }
     }
 }

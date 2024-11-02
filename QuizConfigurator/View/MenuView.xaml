@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:QuizConfigurator.View" 
+             DataContext="{Binding MainWindowViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -36,11 +37,10 @@
 
                 <MenuItem Header="_Add Question"
                           Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
-                <MenuItem Header="_Remove question" />
-                <MenuItem Header="Pack _Options" />
-                <!--<MenuItem Header="Update Button"
-                          InputGestureText="Ctrl+U"
-                          Command="{Binding PlayerViewModel.UpdateButtonCommand}" />-->
+                <MenuItem Header="_Remove question"
+                          Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+                <MenuItem Header="Pack _Options"
+                          Command="{Binding OpenPackOptionsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play"/>

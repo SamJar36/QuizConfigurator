@@ -21,6 +21,27 @@
                FontWeight="Bold"
                Content="{Binding ActivePack.Name}"
                Margin="10, 0, 0, 0"/>
+        
+        <!--Buttons-->
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="optionsButton" 
+                    Margin="0, 6, 6, 3"
+                    Width="15"
+                    Height="15"
+                    Command="{Binding OpenPackOptionsWindowCommand}"/>
+            <Button x:Name="addButton"
+                    Margin="0, 6, 6, 3"
+                    Width="15"
+                    Height="15"
+                    Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+            <Button x:Name="removeButton"
+                    Margin="0, 6, 6, 3"
+                    Width="15"
+                    Height="15"
+                    Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+        </WrapPanel>
+
+        <!--ListBox-->
         <ListBox Grid.Row="1" Grid.Column="0" x:Name="listbox"
                  Margin="6, 0, 6, 6"
                  Grid.RowSpan="2"

@@ -27,3 +27,6 @@ namespace QuizConfigurator
 }
 
 // incorrect answers list instead
+// pack options border shadows
+// move pack options window
+// slider gets stuck
