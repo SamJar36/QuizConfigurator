@@ -37,7 +37,6 @@ namespace QuizConfigurator.ViewModel
             set
             {
                 model.TimeLimitInSeconds = value;
-                // CallerMemberName kommer automatiskt anropa t.ex TimeLimitInSeconds så man inte behöver skriva in det som ett argument
                 RaisePropertyChanged();
             }
         }

@@ -16,6 +16,5 @@ namespace QuizConfigurator.ViewModel
         {
             this.mainWindowViewModel = mainWindowViewModel;
         }
-
     }
 }

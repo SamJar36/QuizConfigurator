@@ -44,6 +44,7 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Play"/>
                 <MenuItem Header="_Edit"/>
+                <Separator />
                 <MenuItem Header="_Fullscreen"/>
             </MenuItem>
         </Menu>

@@ -23,12 +23,17 @@
                Margin="10, 0, 0, 0"/>
         <ListBox Grid.Row="1" Grid.Column="0" x:Name="listbox"
                  Margin="6, 0, 6, 6"
-                 Grid.RowSpan="2">
-            <TextBlock>
-                <Run Text="Question:" FontWeight="Bold"/>
-                <LineBreak/>
-                <Run Text="New Question"/>  
-            </TextBlock>
+                 Grid.RowSpan="2"
+                 ItemsSource="{Binding ActivePack.Questions}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="Question:" FontWeight="Bold"/>
+                        <LineBreak/>
+                        <Run Text="{Binding Query}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel x:Name="questionEditorPanel" 
                     Grid.Column="1"
