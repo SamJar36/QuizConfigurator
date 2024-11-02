@@ -34,7 +34,8 @@
 
             <MenuItem Header="_Edit">
 
-                <MenuItem Header="_Add Question" />
+                <MenuItem Header="_Add Question"
+                          Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
                 <MenuItem Header="_Remove question" />
                 <MenuItem Header="Pack _Options" />
                 <!--<MenuItem Header="Update Button"
