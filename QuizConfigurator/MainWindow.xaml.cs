@@ -30,3 +30,4 @@ namespace QuizConfigurator
 // pack options border shadows
 // move pack options window
 // slider gets stuck
+// Move pack options method to configurationviewmode
