@@ -17,13 +17,32 @@ namespace QuizConfigurator.ViewModel
         private readonly MainWindowViewModel? mainWindowViewModel;
 
         private ObservableCollection<Question> TemporaryQuestionCollection { get; set; }
-        private int CurrentQuestionNumber { get; set; }
         public int CorrectGuesses { get; set; }
+        private int _totalQuestionAmount;
+        private int _currentQuestionNumber;
         private string _questionText;
         private string _buttonText1;
         private string _buttonText2;
         private string _buttonText3;
         private string _buttonText4;
+        public int CurrentQuestionNumber
+        {
+            get => _currentQuestionNumber;
+            set
+            {
+                _currentQuestionNumber = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int TotalQuestionAmount
+        {
+            get => _totalQuestionAmount;
+            set
+            {
+                _totalQuestionAmount = value;
+                RaisePropertyChanged();
+            }
+        }
         public string QuestionText
         {
             get => _questionText;
@@ -79,17 +98,16 @@ namespace QuizConfigurator.ViewModel
         public void StartQuestionGame()
         {
             this.CorrectGuesses = 0;
-            this.CurrentQuestionNumber = 0;
-            // restart question list?
+            this.CurrentQuestionNumber = 1;
             RandomizeQuestionCollection();
             GetCurrentQuestionRoom();
+            this.TotalQuestionAmount = TemporaryQuestionCollection.Count;
         }
         private void RandomizeQuestionCollection()
         {
             Random random = new Random();
             TemporaryQuestionCollection = new ObservableCollection<Question>(mainWindowViewModel.ActivePack.Questions.OrderBy(q => random.Next()));
         }
-        //TemporaryQuestionList.Add(mainWindowViewModel.ActivePack.Questions[i]);
         public void GetCurrentQuestionRoom()
         {
             this.QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber].Query;
@@ -100,10 +118,10 @@ namespace QuizConfigurator.ViewModel
             Random random = new Random();
             List<string> answers = new List<string>
             {
-                TemporaryQuestionCollection[CurrentQuestionNumber].CorrectAnswer,
-                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer1,
-                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer2,
-                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer3
+                TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer,
+                TemporaryQuestionCollection[CurrentQuestionNumber - 1].IncorrectAnswer1,
+                TemporaryQuestionCollection[CurrentQuestionNumber - 1].IncorrectAnswer2,
+                TemporaryQuestionCollection[CurrentQuestionNumber - 1].IncorrectAnswer3
             };
             for (int i = answers.Count - 1; i > 0; i--)
             {
