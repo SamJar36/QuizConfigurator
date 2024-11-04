@@ -4,10 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizConfigurator.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mo="clr-namespace:QuizConfigurator.Model"
         mc:Ignorable="d"
         Title="Pack Options" Height="200" Width="200"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" ResizeMode="NoResize">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="difficultyFromEnum"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mo:Difficulty" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Border BorderBrush="Gray" 
             BorderThickness="1">
         <Grid>
@@ -38,10 +49,9 @@
                        Margin="7, 0, 0, 0" 
                        FontWeight="Bold"/>
                 <ComboBox x:Name="packOptionsDropMenu"
-                          Margin="10, -3, 10, 0">
-                    <ComboBoxItem Content="Easy"/>
-                    <ComboBoxItem Content="Medium"/>
-                    <ComboBoxItem Content="Hard"/>
+                          Margin="10, -3, 10, 0"
+                          ItemsSource="{Binding Source={StaticResource difficultyFromEnum}}"
+                          SelectedValue="{Binding ActivePack.Difficulty, Mode=TwoWay}">
                 </ComboBox>
                 <Label Content="Time Limit:"
                        Margin="7, 0, 0, 0"
@@ -52,7 +62,8 @@
                         TickFrequency="5"
                         IsSnapToTickEnabled="True"
                         Margin="10, 5, 10, 0"
-                        TickPlacement="BottomRight"/>
+                        TickPlacement="BottomRight"
+                        Value="{Binding ActivePack.TimeLimitInSeconds, Mode=TwoWay}"/>
             </StackPanel>
             <Label HorizontalAlignment="Right"
                    Grid.Row="2"

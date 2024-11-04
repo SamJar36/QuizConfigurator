@@ -22,6 +22,7 @@ namespace QuizConfigurator.View
         public PackOptionsView()
         {
             InitializeComponent();
+            DataContext = (App.Current.MainWindow as MainWindow).DataContext;
         }
 
         private void closeButton_Click(object sender, RoutedEventArgs e)
