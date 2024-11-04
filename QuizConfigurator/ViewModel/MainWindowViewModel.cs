@@ -32,10 +32,10 @@ namespace QuizConfigurator.ViewModel
         }
         public MainWindowViewModel()
         {
+            ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
-            ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
-
+            
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
         }
