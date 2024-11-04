@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Linq;
+using Microsoft.VisualBasic.Devices;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -96,12 +97,25 @@ namespace QuizConfigurator.ViewModel
         }
         private void RandomizeButtonsForCurrentQuestion()
         {
-            //Random random = new Random();
-            //int randomizedButtons = random.Next(0, 4);
-            this.ButtonText1 = TemporaryQuestionCollection[CurrentQuestionNumber].CorrectAnswer;
-            this.ButtonText2 = TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer1;
-            this.ButtonText3 = TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer2;
-            this.ButtonText4 = TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer3;
+            Random random = new Random();
+            List<string> answers = new List<string>
+            {
+                TemporaryQuestionCollection[CurrentQuestionNumber].CorrectAnswer,
+                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer1,
+                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer2,
+                TemporaryQuestionCollection[CurrentQuestionNumber].IncorrectAnswer3
+            };
+            for (int i = answers.Count - 1; i > 0; i--)
+            {
+                int j = random.Next(i + 1);
+                string temp = answers[i];
+                answers[i] = answers[j];
+                answers[j] = temp;
+            }
+            this.ButtonText1 = answers[0];
+            this.ButtonText2 = answers[1];
+            this.ButtonText3 = answers[2];
+            this.ButtonText4 = answers[3];
         }
         public void CheckIfAnswerIsCorrect()
         {
