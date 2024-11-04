@@ -4,16 +4,58 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizConfigurator.View"
-             DataContext="{Binding PlayerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
     <Grid>
-        <!--<Button Grid.Row="1"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Content="{Binding TestData}"
-                Margin="10"
-                Command="{Binding UpdateButtonCommand}"
-                />-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   FontSize="25"
+                   Text="{Binding ActivePack.Name}"
+                   TextWrapping="Wrap"/>
+        <Button x:Name="topLeftButton"
+                Grid.Column="1"
+                Grid.Row="1"
+                Width="200"
+                Height="80"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0, 0, 10, 10"/>
+        <Button x:Name="topRightButton"
+                Grid.Column="2"
+                Grid.Row="1"
+                Width="200"
+                Height="80"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="10, 0, 0, 10"/>
+        <Button x:Name="bottomLeftButton"
+                Grid.Column="1"
+                Grid.Row="2"
+                Width="200"
+                Height="80"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0, 10, 10, 0"/>
+        <Button x:Name="bottomRightButton"
+                Grid.Column="2"
+                Grid.Row="2"
+                Width="200"
+                Height="80"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10, 10, 0, 0"/>
     </Grid>
 </UserControl>
