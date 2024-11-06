@@ -19,13 +19,13 @@ namespace QuizConfigurator.Model
             Difficulty = difficulty;
             TimeLimitInSeconds = timeLimitInSeconds;
 
-            Question question1 = new Question("What color is the sky?", "blue", "green", "no color", "banana");
-            Question question2 = new Question("Do I own a cat?", "no", "yes", "maybe?", "banana");
-            Question question3 = new Question("What is my name?", "sam", "blubba", "kaloopsy", "strawberry");
-            Question question4 = new Question("What's in my coffee cup?", "nothing", "coffee", "cats", "juice");
-            Question question5 = new Question("Is donald trump gonna win?", "no", "yes", "help", "llama");
+            //Question question1 = new Question("What color is the sky?", "blue", "green", "no color", "banana");
+            //Question question2 = new Question("Do I own a cat?", "no", "yes", "maybe?", "banana");
+            //Question question3 = new Question("What is my name?", "sam", "blubba", "kaloopsy", "strawberry");
+            //Question question4 = new Question("What's in my coffee cup?", "nothing", "coffee", "cats", "juice");
+            //Question question5 = new Question("Is donald trump gonna win?", "no", "yes", "help", "llama");
 
-            this.Questions = new List<Question>() { question1, question2, question3, question4, question5};
+            //this.Questions = new List<Question>() { question1, question2, question3, question4, question5};
         }
     }
 }

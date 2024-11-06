@@ -48,11 +48,13 @@ namespace QuizConfigurator.ViewModel
         }
         public MainWindowViewModel()
         {
-            LoadAndSaveFromJSON loadSave = new LoadAndSaveFromJSON();
-            CurrentView = "Player";
+            Configuration config = new Configuration();
+            var loadedQuestionPacks = config.Load();
+
+            CurrentView = "Configuration";
 
             //ViewModels
-            ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
+            ActivePack = new QuestionPackViewModel(loadedQuestionPacks[0]);
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
             

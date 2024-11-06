@@ -11,20 +11,19 @@ using static System.Windows.Forms.Design.AxImporter;
 
 namespace QuizConfigurator.Model
 {
-    internal class LoadAndSaveFromJSON
+    internal class Configuration
     {
         private string SavedPath { get; set; }
-        public LoadAndSaveFromJSON()
+        public Configuration()
         {
             string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string labb3FolderPath = Path.Combine(localAppDataPath, "labb3");
+            string labb3FolderPath = Path.Combine(localAppDataPath, "Labb3");
             if (!Directory.Exists(labb3FolderPath))
             {
                 Directory.CreateDirectory(labb3FolderPath);
             }
-            SavedPath = labb3FolderPath;
-
             string jsonFilePath = Path.Combine(labb3FolderPath, "QuestionPacks.json");
+            SavedPath = jsonFilePath;
             if (!File.Exists(jsonFilePath))
             {
                 var questionPack = new[]
@@ -68,9 +67,11 @@ namespace QuizConfigurator.Model
                 File.WriteAllText(jsonFilePath, json);
             }         
         }
-        public void Load()
+        public List<QuestionPack> Load()
         {
-            //deserializing
+            string json = File.ReadAllText(SavedPath);
+            var uggabugga = JsonSerializer.Deserialize<List<QuestionPack>>(json);
+            return uggabugga!;
         }
         public void Save()
         {
