@@ -1,5 +1,6 @@
 ﻿using QuizConfigurator.Command;
 using QuizConfigurator.Model;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using QuizConfigurator.View;
 using System.Windows;
+using System.Windows.Input;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -21,7 +23,9 @@ namespace QuizConfigurator.ViewModel
 
         public DelegateCommand ExitProgramCommand { get; }
         public DelegateCommand OpenPackOptionsWindowCommand { get; }
-        public DelegateCommand SwitchViewCommand { get; }
+        public DelegateCommand SwitchToPlayerViewCommand { get; }
+        public DelegateCommand SwitchToConfigurationViewCommand { get; }
+
 
         private string _currentView;
         public string CurrentView
@@ -44,15 +48,19 @@ namespace QuizConfigurator.ViewModel
         }
         public MainWindowViewModel()
         {
-            CurrentView = "Configuration";
+            LoadAndSaveFromJSON loadSave = new LoadAndSaveFromJSON();
+            CurrentView = "Player";
 
+            //ViewModels
             ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
             
+            //Commands
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
-            SwitchViewCommand = new DelegateCommand(SwitchView, CanSwitchView);
+            SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
+            SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
         }
         public bool CanExitProgram(object? arg) => true;
 
@@ -66,10 +74,16 @@ namespace QuizConfigurator.ViewModel
             PackOptionsView options = new PackOptionsView();
             options.ShowDialog();
         }
-        public bool CanSwitchView(object? arg) => true;
-        public void SwitchView(object obj)
+        public bool CanSwitchToConfigurationView(object? arg) => CurrentView == "Player";
+        public void SwitchToConfigurationView(object obj)
         {
-            CurrentView = CurrentView == "Configuration" ? "Player" : "Configuration";
+            CurrentView = "Configuration";
+        }
+        public bool CanSwitchToPlayerView(object? arg) => CurrentView == "Configuration";
+        public void SwitchToPlayerView(object obj)
+        {
+            CurrentView = "Player";
+            PlayerViewModel.StartQuestionGame();
         }
     }
 }

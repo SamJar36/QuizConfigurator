@@ -43,10 +43,10 @@
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play"
-                          Command="{Binding SwitchViewCommand}"/>
+                          Command="{Binding SwitchToPlayerViewCommand}"/>
                 <MenuItem Header="_Edit"
-                          Command="{Binding SwitchViewCommand}"/>
-                <Separator />
+                          Command="{Binding SwitchToConfigurationViewCommand}"/>
+                <Separator/>
                 <MenuItem Header="_Fullscreen"/>
             </MenuItem>
         </Menu>

@@ -1,5 +1,6 @@
 ﻿using QuizConfigurator.Command;
 using QuizConfigurator.Model;
+using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ namespace QuizConfigurator.ViewModel
         private string _buttonText2;
         private string _buttonText3;
         private string _buttonText4;
+        public DelegateCommand SelectAnswerCommand { get; }
         public int CurrentQuestionNumber
         {
             get => _currentQuestionNumber;
@@ -93,14 +95,15 @@ namespace QuizConfigurator.ViewModel
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
+            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);
             StartQuestionGame();
         }
         public void StartQuestionGame()
         {
             this.CorrectGuesses = 0;
-            this.CurrentQuestionNumber = 1;
+            this.CurrentQuestionNumber = 0;
             RandomizeQuestionCollection();
-            GetCurrentQuestionRoom();
+            GetNextQuestionRoom();
             this.TotalQuestionAmount = TemporaryQuestionCollection.Count;
         }
         private void RandomizeQuestionCollection()
@@ -108,9 +111,10 @@ namespace QuizConfigurator.ViewModel
             Random random = new Random();
             TemporaryQuestionCollection = new ObservableCollection<Question>(mainWindowViewModel.ActivePack.Questions.OrderBy(q => random.Next()));
         }
-        public void GetCurrentQuestionRoom()
+        public void GetNextQuestionRoom()
         {
-            this.QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber].Query;
+            CurrentQuestionNumber++;
+            this.QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber - 1].Query;
             RandomizeButtonsForCurrentQuestion();
         }
         private void RandomizeButtonsForCurrentQuestion()
@@ -135,9 +139,23 @@ namespace QuizConfigurator.ViewModel
             this.ButtonText3 = answers[2];
             this.ButtonText4 = answers[3];
         }
-        public void CheckIfAnswerIsCorrect()
+        public bool CanSelectAnswer(object? obj) => true;
+        public void SelectAnswer(object obj)
         {
-            
+            var button = obj as Button;
+            if (button != null)
+            {
+                string buttonText = button.Content.ToString();
+
+                if (buttonText == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer)
+                {
+                    GetNextQuestionRoom();
+                }
+                else
+                {
+                    GetNextQuestionRoom();
+                }
+            }
         }
     }
 }
