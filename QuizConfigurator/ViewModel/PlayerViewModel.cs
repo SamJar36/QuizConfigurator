@@ -147,14 +147,20 @@ namespace QuizConfigurator.ViewModel
             {
                 string buttonText = button.Content.ToString();
 
-                if (buttonText == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer)
-                {
-                    GetNextQuestionRoom();
-                }
-                else
-                {
-                    GetNextQuestionRoom();
-                }
+                CheckIfCorrectAnswer(buttonText);
+            }
+        }
+        public void CheckIfCorrectAnswer(string yourAnswer)
+        {
+            // turn all buttons red and green
+            if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer)
+            {
+                //score++
+                GetNextQuestionRoom();
+            }
+            else
+            {
+                GetNextQuestionRoom();
             }
         }
     }
