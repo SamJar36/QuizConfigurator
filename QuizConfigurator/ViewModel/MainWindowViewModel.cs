@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using QuizConfigurator.View;
+using System.Windows;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -20,7 +21,18 @@ namespace QuizConfigurator.ViewModel
 
         public DelegateCommand ExitProgramCommand { get; }
         public DelegateCommand OpenPackOptionsWindowCommand { get; }
+        public DelegateCommand SwitchViewCommand { get; }
 
+        private string _currentView;
+        public string CurrentView
+        {
+            get => _currentView;
+            set
+            {
+                _currentView = value;
+                RaisePropertyChanged();
+            }
+        }
         public QuestionPackViewModel? ActivePack
         {
             get => _activePack;
@@ -32,12 +44,15 @@ namespace QuizConfigurator.ViewModel
         }
         public MainWindowViewModel()
         {
+            CurrentView = "Configuration";
+
             ActivePack = new QuestionPackViewModel(new QuestionPack("Default Question Pack"));
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
             
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
+            SwitchViewCommand = new DelegateCommand(SwitchView, CanSwitchView);
         }
         public bool CanExitProgram(object? arg) => true;
 
@@ -50,6 +65,11 @@ namespace QuizConfigurator.ViewModel
         {
             PackOptionsView options = new PackOptionsView();
             options.ShowDialog();
+        }
+        public bool CanSwitchView(object? arg) => true;
+        public void SwitchView(object obj)
+        {
+            CurrentView = CurrentView == "Configuration" ? "Player" : "Configuration";
         }
     }
 }

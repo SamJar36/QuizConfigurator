@@ -42,8 +42,10 @@
                           Command="{Binding OpenPackOptionsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Play"/>
-                <MenuItem Header="_Edit"/>
+                <MenuItem Header="_Play"
+                          Command="{Binding SwitchViewCommand}"/>
+                <MenuItem Header="_Edit"
+                          Command="{Binding SwitchViewCommand}"/>
                 <Separator />
                 <MenuItem Header="_Fullscreen"/>
             </MenuItem>

@@ -12,6 +12,19 @@
     <Window.InputBindings>
         <!--<KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding PlayerViewModel.UpdateButtonCommand}" />-->
     </Window.InputBindings>
+    <Window.Resources>
+        <DataTemplate x:Key="ConfigurationView">
+            <view:ConfigurationView DataContext="{Binding DataContext, 
+                RelativeSource={RelativeSource 
+                AncestorType=ContentControl}}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PlayerView">
+            <view:PlayerView DataContext="{Binding DataContext, 
+                RelativeSource={RelativeSource 
+                AncestorType=ContentControl}}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,8 +33,20 @@
         
         <view:MenuView Grid.Row="0"/>
 
-        <!--<view:PlayerView Grid.Row="1" />-->
-        <view:ConfigurationView Grid.Row="1" />
+        <ContentControl Content="{Binding CurrentView}" Grid.Row="1">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentView}" Value="Configuration">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ConfigurationView}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentView}" Value="Player">
+                            <Setter Property="ContentTemplate" Value="{StaticResource PlayerView}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
 
     </Grid>
 </Window>
