@@ -32,14 +32,14 @@ namespace QuizConfigurator
 // Move pack options method to configurationviewmode
 // dialog not center screen but center on window
 
-//CreateNewPacks in Dialogs, not view
 //fix play/edit bug
 //time limit
 //when last question go to score screen
 //score screen (play again, exit, score)
 //exiting or switching packs saves the question pack to json
 //if button is blank in SelectButton, dont crash game
-// new question pack
-//select question pack
+// new question pack function
+// select question pack function
 // delete question pack
+// delete question pack function
 // some sort of pause inbetween clicking on buttons and next room

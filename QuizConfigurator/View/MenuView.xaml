@@ -4,22 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             xmlns:local="clr-namespace:QuizConfigurator.View" 
+             xmlns:local="clr-namespace:QuizConfigurator.View"
+             xmlns:con="clr-namespace:QuizConfigurator.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <con:QuestionPackConverter x:Key="QuestionPackConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Menu>
             <MenuItem Header="_File" >
 
                 <MenuItem Header="_New Question Pack" 
                           Icon="{fa:Icon floppyDisk}"
-                          Command="{Binding CreateNewPackWindowCommand}"/>
+                          Command="{Binding OpenNewPackWindowCommand}"/>
 
-                <MenuItem Header="_Select Question Pack">
-                    <MenuItem Header="Default Question Pack (Easy)" />
+                <MenuItem Header="_Select Question Pack"
+                          ItemsSource="{Binding Packs}">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource QuestionPackConverter}}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
                 </MenuItem>
 
-                <MenuItem Header="_Delete Question Pack" />
+                <MenuItem Header="_Delete Question Pack"
+                          Command="{Binding DeletePackCommand}"/>
 
                 <Separator />
 

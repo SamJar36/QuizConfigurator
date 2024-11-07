@@ -24,11 +24,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="2.06*"/>
+                <RowDefinition Height="1.65*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="Pack Options"
+            <Label Content="Create new pack"
                Margin="5, 0, 0 ,0"/>
             <Button x:Name="closeButton"
                 HorizontalAlignment="Right"
@@ -41,35 +41,35 @@
                 Click="closeButton_Click"/>
             <StackPanel Grid.Row="1" Grid.RowSpan="2">
                 <Label Content="Pack Name:"
-                   Margin="7, 20, 0, 0"
-                   FontWeight="Bold"/>
+                       Margin="7, 20, 0, 0"
+                       FontWeight="Bold"/>
                 <TextBox x:Name="packOptionsPackName"
-                     Text="{Binding ActivePack.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="10, -3, 10, 0" />
+                         Text="Pack Name"
+                         Margin="10, -3, 10, 0" />
                 <Label Content="Difficulty:"
-                   Margin="7, 0, 0, 0" 
-                   FontWeight="Bold"/>
+                       Margin="7, 0, 0, 0" 
+                       FontWeight="Bold"/>
                 <ComboBox x:Name="packOptionsDropMenu"
-                      Margin="10, -3, 10, 0"
-                      ItemsSource="{Binding Source={StaticResource difficultyFromEnum}}"
-                      SelectedValue="{Binding ActivePack.Difficulty, Mode=TwoWay}">
+                          Margin="10, -3, 10, 0"
+                          ItemsSource="{Binding Source={StaticResource difficultyFromEnum}}"
+                          SelectedValue="1">
                 </ComboBox>
                 <Label Content="Time Limit:"
-                   Margin="7, 0, 0, 0"
-                   FontWeight="Bold"/>
+                       Margin="7, 0, 0, 0"
+                       FontWeight="Bold"/>
                 <Slider x:Name="timeLimitSlider" 
-                    Minimum="5" 
-                    Maximum="120"
-                    TickFrequency="5"
-                    IsSnapToTickEnabled="True"
-                    Margin="10, 5, 10, 0"
-                    TickPlacement="BottomRight"
-                    Value="{Binding ActivePack.TimeLimitInSeconds, Mode=TwoWay}"/>
+                        Minimum="5" 
+                        Maximum="120"
+                        TickFrequency="5"
+                        IsSnapToTickEnabled="True"
+                        Margin="10, 5, 10, 0"
+                        TickPlacement="BottomRight"
+                        Value="30"/>
             </StackPanel>
             <Label HorizontalAlignment="Right"
-               Grid.Row="2"
-               Margin="0, -45, 10, 0"
-               Height="24">
+                   Grid.Row="2"
+                   Margin="0, -45, 10, 0"
+                   Height="24">
                 <TextBlock>
                 <Run Text="{Binding ElementName=timeLimitSlider, Path=Value}" />
                 <Run Text=" seconds" />

@@ -60,7 +60,15 @@ namespace QuizConfigurator.ViewModel
             ActivePack = new QuestionPackViewModel(loadedQuestionPacks[0]);
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
-            
+
+            //Packs
+            Packs = new ObservableCollection<QuestionPackViewModel>();
+            foreach (var questionpack in loadedQuestionPacks)
+            {
+                QuestionPackViewModel newPack = new QuestionPackViewModel(questionpack);
+                Packs.Add(newPack);
+            }
+
             //Commands
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);

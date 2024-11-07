@@ -22,7 +22,7 @@ namespace QuizConfigurator.Model
             {
                 Directory.CreateDirectory(labb3FolderPath);
             }
-            string jsonFilePath = Path.Combine(labb3FolderPath, "QuestionPacks.json");
+            string jsonFilePath = Path.Combine(labb3FolderPath, "Labb3QuestionPacks.json");
             SavedPath = jsonFilePath;
             if (!File.Exists(jsonFilePath))
             {
@@ -58,6 +58,39 @@ namespace QuizConfigurator.Model
                                 IncorrectAnswer1 = "Librarian",
                                 IncorrectAnswer2 = "Taxi Driver",
                                 IncorrectAnswer3 = "Dentist"
+                            }
+                        }
+                    },
+                    new
+                    {
+                        Name = "Video Game Quiz",
+                        Difficulty = 1,
+                        TimeLimitInSeconds = 15,
+                        Questions = new[]
+                        {
+                            new
+                            {
+                                Query = "Who is nearly always the protagonist in Zelda games?",
+                                CorrectAnswer = "Link",
+                                IncorrectAnswer1 = "Zelda",
+                                IncorrectAnswer2 = "Ganon",
+                                IncorrectAnswer3 = "Zora"
+                            },
+                            new
+                            {
+                                Query = "In Mario 64, which level is in the door all the way to the right when you first enter?",
+                                CorrectAnswer = "Jolly Roger Bay",
+                                IncorrectAnswer1 = "Cool Cool Mountain",
+                                IncorrectAnswer2 = "Bob-omb Battlefield",
+                                IncorrectAnswer3 = "Boo's Haunted Mansion"
+                            },
+                            new
+                            {
+                                Query = "What is the name of the antagonist who hunts you in the Waterfall zone in Undertale?",
+                                CorrectAnswer = "Undyne",
+                                IncorrectAnswer1 = "Sans",
+                                IncorrectAnswer2 = "Papyrus",
+                                IncorrectAnswer3 = "Asgore"
                             }
                         }
                     }
