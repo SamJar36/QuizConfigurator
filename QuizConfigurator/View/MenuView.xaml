@@ -19,8 +19,13 @@
                           Icon="{fa:Icon floppyDisk}"
                           Command="{Binding OpenNewPackWindowCommand}"/>
 
-                <MenuItem Header="_Select Question Pack"
-                          ItemsSource="{Binding Packs}">
+                <MenuItem Header="_Select Question Pack" ItemsSource="{Binding Packs}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Command" Value="{Binding DataContext.SwitchActivePackCommand, RelativeSource={RelativeSource AncestorType=MenuItem}}" />
+                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource QuestionPackConverter}}"/>

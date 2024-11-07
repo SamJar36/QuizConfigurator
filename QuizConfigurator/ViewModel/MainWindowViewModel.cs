@@ -19,6 +19,7 @@ namespace QuizConfigurator.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
+
         private QuestionPackViewModel? _activePack;
         public PlayerViewModel PlayerViewModel { get; }
         public ConfigurationViewModel ConfigurationViewModel { get; }
@@ -29,6 +30,7 @@ namespace QuizConfigurator.ViewModel
         public DelegateCommand SwitchToConfigurationViewCommand { get; }
         public DelegateCommand OpenNewPackWindowCommand { get; }
         public DelegateCommand CreateNewPackCommand { get; }
+        public DelegateCommand SwitchActivePackCommand { get; }
 
         private string _currentView;
         public string CurrentView
@@ -76,6 +78,7 @@ namespace QuizConfigurator.ViewModel
             SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
             OpenNewPackWindowCommand = new DelegateCommand(OpenCreateNewPack, CanOpenCreateNewPack);
             CreateNewPackCommand = new DelegateCommand(CreateNewPack, CanCreateNewPack);
+            SwitchActivePackCommand = new DelegateCommand(SwitchActivePack, CanSwitchActivePack);
         }
         public bool CanExitProgram(object? arg) => true;
 
@@ -110,6 +113,14 @@ namespace QuizConfigurator.ViewModel
         public void CreateNewPack(object obj)
         {
             
+        }
+        public bool CanSwitchActivePack(object? arg) => true;
+        public void SwitchActivePack(object obj)
+        {
+            if (obj is QuestionPackViewModel selectedPack)
+            {
+                ActivePack = selectedPack;
+            }
         }
     }
 }
