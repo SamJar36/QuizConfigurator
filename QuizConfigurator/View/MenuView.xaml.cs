@@ -24,5 +24,23 @@ namespace QuizConfigurator.View
         {
             InitializeComponent();
         }
+
+        private void FullScreen_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow;
+
+            if (mainWindow.WindowState == WindowState.Normal)
+            {
+                mainWindow.WindowState = WindowState.Maximized;
+                mainWindow.WindowStyle = WindowStyle.None;
+                mainWindow.ResizeMode = ResizeMode.NoResize;
+            }
+            else
+            {
+                mainWindow.WindowState = WindowState.Normal;
+                mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                mainWindow.ResizeMode = ResizeMode.CanResize;
+            }
+        }
     }
 }

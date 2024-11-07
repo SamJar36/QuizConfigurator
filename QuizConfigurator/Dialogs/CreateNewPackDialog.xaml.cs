@@ -12,22 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QuizConfigurator.View
+namespace QuizConfigurator.Dialogs
 {
     /// <summary>
-    /// Interaction logic for PackOptionsView.xaml
+    /// Interaction logic for CreateNewPackDialog.xaml
     /// </summary>
-    public partial class PackOptionsView : Window
+    public partial class CreateNewPackDialog : Window
     {
-        public PackOptionsView()
+        public CreateNewPackDialog()
         {
             InitializeComponent();
-            DataContext = (App.Current.MainWindow as MainWindow).DataContext;
-        }
-
-        private void closeButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

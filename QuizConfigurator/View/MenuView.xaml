@@ -47,7 +47,8 @@
                 <MenuItem Header="_Edit"
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
                 <Separator/>
-                <MenuItem Header="_Fullscreen"/>
+                <MenuItem Header="_Fullscreen"
+                          Click="FullScreen_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

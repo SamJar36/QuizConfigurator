@@ -1,5 +1,6 @@
 ﻿using QuizConfigurator.Command;
 using QuizConfigurator.Model;
+using QuizConfigurator.Dialogs;
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace QuizConfigurator.ViewModel
         public bool CanOpenOptions(object? arg) => true;
         public void OpenOptions(object obj)
         {
-            PackOptionsView options = new PackOptionsView();
+            PackOptionsDialog options = new PackOptionsDialog();
             options.ShowDialog();
         }
         public bool CanSwitchToConfigurationView(object? arg) => CurrentView == "Player";

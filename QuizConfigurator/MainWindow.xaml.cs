@@ -30,8 +30,9 @@ namespace QuizConfigurator
 // pack options border shadows
 // move pack options window
 // Move pack options method to configurationviewmode
+// dialog not center screen but center on window
 
-//PackOptions and CreateNewPacks in Dialogs, not view
+//CreateNewPacks in Dialogs, not view
 //fix play/edit bug
 //time limit
 //when last question go to score screen
