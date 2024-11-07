@@ -42,5 +42,4 @@ namespace QuizConfigurator
 // new question pack
 //select question pack
 // delete question pack
-//fullscreen
 // some sort of pause inbetween clicking on buttons and next room

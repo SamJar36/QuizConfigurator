@@ -12,6 +12,7 @@ using System.Text.Json;
 using QuizConfigurator.View;
 using System.Windows;
 using System.Windows.Input;
+using System.Security.Policy;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -26,7 +27,8 @@ namespace QuizConfigurator.ViewModel
         public DelegateCommand OpenPackOptionsWindowCommand { get; }
         public DelegateCommand SwitchToPlayerViewCommand { get; }
         public DelegateCommand SwitchToConfigurationViewCommand { get; }
-
+        public DelegateCommand OpenNewPackWindowCommand { get; }
+        public DelegateCommand CreateNewPackCommand { get; }
 
         private string _currentView;
         public string CurrentView
@@ -64,6 +66,8 @@ namespace QuizConfigurator.ViewModel
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
             SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
             SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
+            OpenNewPackWindowCommand = new DelegateCommand(OpenCreateNewPack, CanOpenCreateNewPack);
+            CreateNewPackCommand = new DelegateCommand(CreateNewPack, CanCreateNewPack);
         }
         public bool CanExitProgram(object? arg) => true;
 
@@ -74,8 +78,8 @@ namespace QuizConfigurator.ViewModel
         public bool CanOpenOptions(object? arg) => true;
         public void OpenOptions(object obj)
         {
-            PackOptionsDialog options = new PackOptionsDialog();
-            options.ShowDialog();
+            PackOptionsDialog optionsWindow = new PackOptionsDialog();
+            optionsWindow.ShowDialog();
         }
         public bool CanSwitchToConfigurationView(object? arg) => CurrentView == "Player";
         public void SwitchToConfigurationView(object obj)
@@ -87,6 +91,17 @@ namespace QuizConfigurator.ViewModel
         {
             CurrentView = "Player";
             PlayerViewModel.StartQuestionGame();
+        }
+        public bool CanOpenCreateNewPack(object? arg) => true;
+        public void OpenCreateNewPack(object obj)
+        {
+            CreateNewPackDialog createPackWindow = new CreateNewPackDialog();
+            createPackWindow.ShowDialog();
+        }
+        public bool CanCreateNewPack(object? arg) => true;
+        public void CreateNewPack(object obj)
+        {
+            
         }
     }
 }

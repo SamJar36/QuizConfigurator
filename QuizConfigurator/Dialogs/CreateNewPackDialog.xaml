@@ -4,9 +4,93 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizConfigurator.Dialogs"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mo="clr-namespace:QuizConfigurator.Model"
         mc:Ignorable="d"
-        Title="CreateNewPackDialog" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize"
+        Title="CreateNewPackDialog" Height="270" Width="200">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="difficultyFromEnum"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mo:Difficulty" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Border BorderBrush="Gray" 
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="2.06*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Pack Options"
+               Margin="5, 0, 0 ,0"/>
+            <Button x:Name="closeButton"
+                HorizontalAlignment="Right"
+                Width="20"
+                Height="20"
+                Margin="0, 3, 3, 4"
+                Content="x"
+                Background="Red"
+                Foreground="White"
+                Click="closeButton_Click"/>
+            <StackPanel Grid.Row="1" Grid.RowSpan="2">
+                <Label Content="Pack Name:"
+                   Margin="7, 20, 0, 0"
+                   FontWeight="Bold"/>
+                <TextBox x:Name="packOptionsPackName"
+                     Text="{Binding ActivePack.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="10, -3, 10, 0" />
+                <Label Content="Difficulty:"
+                   Margin="7, 0, 0, 0" 
+                   FontWeight="Bold"/>
+                <ComboBox x:Name="packOptionsDropMenu"
+                      Margin="10, -3, 10, 0"
+                      ItemsSource="{Binding Source={StaticResource difficultyFromEnum}}"
+                      SelectedValue="{Binding ActivePack.Difficulty, Mode=TwoWay}">
+                </ComboBox>
+                <Label Content="Time Limit:"
+                   Margin="7, 0, 0, 0"
+                   FontWeight="Bold"/>
+                <Slider x:Name="timeLimitSlider" 
+                    Minimum="5" 
+                    Maximum="120"
+                    TickFrequency="5"
+                    IsSnapToTickEnabled="True"
+                    Margin="10, 5, 10, 0"
+                    TickPlacement="BottomRight"
+                    Value="{Binding ActivePack.TimeLimitInSeconds, Mode=TwoWay}"/>
+            </StackPanel>
+            <Label HorizontalAlignment="Right"
+               Grid.Row="2"
+               Margin="0, -45, 10, 0"
+               Height="24">
+                <TextBlock>
+                <Run Text="{Binding ElementName=timeLimitSlider, Path=Value}" />
+                <Run Text=" seconds" />
+                </TextBlock>
+            </Label>
+            <WrapPanel Grid.Row="3">
+                <Button Content="Cancel"
+                        Width="50"
+                        Height="20"
+                        Margin="20, 20, 0, 0"
+                        Click="closeButton_Click">
+                </Button>
+                <Button Content="Create"
+                        Width="50"
+                        Height="20"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="50, 20, 0, 0"
+                        Command="{Binding CreateNewPackCommand}">
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </Border>
 </Window>

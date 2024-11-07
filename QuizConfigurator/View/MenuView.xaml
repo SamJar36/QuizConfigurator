@@ -12,7 +12,8 @@
             <MenuItem Header="_File" >
 
                 <MenuItem Header="_New Question Pack" 
-                          Icon="{fa:Icon floppyDisk}"/>
+                          Icon="{fa:Icon floppyDisk}"
+                          Command="{Binding CreateNewPackWindowCommand}"/>
 
                 <MenuItem Header="_Select Question Pack">
                     <MenuItem Header="Default Question Pack (Easy)" />
