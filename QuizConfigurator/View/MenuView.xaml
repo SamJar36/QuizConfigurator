@@ -59,7 +59,7 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Play"
                           Command="{Binding SwitchToPlayerViewCommand}"/>
-                <MenuItem Header="_Edit"
+                <MenuItem Header="Ed_it"
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
                 <Separator/>
                 <MenuItem Header="_Fullscreen"

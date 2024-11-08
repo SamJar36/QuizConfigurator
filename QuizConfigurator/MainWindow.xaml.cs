@@ -34,14 +34,3 @@ namespace QuizConfigurator
         }
     }
 }
-
-// incorrect answers list instead
-// pack options border shadows
-// move pack options window
-// Move pack options method to configurationviewmode
-// dialog not center screen but center on window
-
-//time limit
-//when last question go to score screen
-//score screen (play again, exit, score)
-// some sort of pause inbetween clicking on buttons and next room
