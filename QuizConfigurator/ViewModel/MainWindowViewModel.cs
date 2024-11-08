@@ -13,6 +13,7 @@ using QuizConfigurator.View;
 using System.Windows;
 using System.Windows.Input;
 using System.Security.Policy;
+using System.Windows.Markup;
 
 namespace QuizConfigurator.ViewModel
 {
@@ -20,6 +21,7 @@ namespace QuizConfigurator.ViewModel
     {
         public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
         private int currentPackNumber;
+        public QuestionPack NewQuestionPack { get; set; }
 
         private QuestionPackViewModel? _activePack;
         public PlayerViewModel PlayerViewModel { get; }
@@ -55,10 +57,11 @@ namespace QuizConfigurator.ViewModel
         }
         public MainWindowViewModel()
         {
+            CurrentView = "Configuration";
+
+            //Load from json file
             Configuration config = new Configuration();
             var loadedQuestionPacks = config.Load();
-
-            CurrentView = "Configuration";
 
             //ViewModels
             ActivePack = new QuestionPackViewModel(loadedQuestionPacks[0]);
@@ -79,7 +82,7 @@ namespace QuizConfigurator.ViewModel
             OpenPackOptionsWindowCommand = new DelegateCommand(OpenOptions, CanOpenOptions);
             SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
             SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
-            OpenNewPackWindowCommand = new DelegateCommand(OpenCreateNewPack, CanOpenCreateNewPack);
+            OpenNewPackWindowCommand = new DelegateCommand(OpenCreateNewPackWindow, CanOpenCreateNewPackWindow);
             CreateNewPackCommand = new DelegateCommand(CreateNewPack, CanCreateNewPack);
             SwitchActivePackCommand = new DelegateCommand(SwitchActivePack, CanSwitchActivePack);
             DeleteActivePackCommand = new DelegateCommand(DeleteActivePack, CanDeleteActivePack);
@@ -107,16 +110,22 @@ namespace QuizConfigurator.ViewModel
             CurrentView = "Player";
             PlayerViewModel.StartQuestionGame();
         }
-        public bool CanOpenCreateNewPack(object? arg) => true;
-        public void OpenCreateNewPack(object obj)
+        public bool CanOpenCreateNewPackWindow(object? arg) => true;
+        public void OpenCreateNewPackWindow(object obj)
         {
+            NewQuestionPack = new QuestionPack("<Pack Name>");
+            //TempName = newQuestionPack.Name;
+            //TempDifficulty = newQuestionPack.Difficulty;
+            //TempTime = newQuestionPack.TimeLimitInSeconds;
             CreateNewPackDialog createPackWindow = new CreateNewPackDialog();
             createPackWindow.ShowDialog();
         }
         public bool CanCreateNewPack(object? arg) => true;
         public void CreateNewPack(object obj)
         {
-            
+            ActivePack = new QuestionPackViewModel(NewQuestionPack);
+            Packs.Add(ActivePack);
+            currentPackNumber = Packs.IndexOf(ActivePack);
         }
         public bool CanSwitchActivePack(object? arg) => true;
         public void SwitchActivePack(object obj)

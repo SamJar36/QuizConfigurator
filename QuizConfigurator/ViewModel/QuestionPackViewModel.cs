@@ -43,7 +43,7 @@ namespace QuizConfigurator.ViewModel
         public QuestionPackViewModel(QuestionPack model)
         {
             this.model = model;
-            this.Questions = new ObservableCollection<Question>(model.Questions);
+            this.Questions = new ObservableCollection<Question>(model.Questions ?? new List<Question>());
         }
     }
 }

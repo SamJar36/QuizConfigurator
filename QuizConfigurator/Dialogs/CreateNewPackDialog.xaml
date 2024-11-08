@@ -44,7 +44,7 @@
                        Margin="7, 20, 0, 0"
                        FontWeight="Bold"/>
                 <TextBox x:Name="packOptionsPackName"
-                         Text="Pack Name"
+                         Text="{Binding NewQuestionPack.Name}"
                          Margin="10, -3, 10, 0" />
                 <Label Content="Difficulty:"
                        Margin="7, 0, 0, 0" 
@@ -52,7 +52,7 @@
                 <ComboBox x:Name="packOptionsDropMenu"
                           Margin="10, -3, 10, 0"
                           ItemsSource="{Binding Source={StaticResource difficultyFromEnum}}"
-                          SelectedValue="1">
+                          SelectedValue="{Binding NewQuestionPack.Difficulty}">
                 </ComboBox>
                 <Label Content="Time Limit:"
                        Margin="7, 0, 0, 0"
@@ -64,7 +64,7 @@
                         IsSnapToTickEnabled="True"
                         Margin="10, 5, 10, 0"
                         TickPlacement="BottomRight"
-                        Value="30"/>
+                        Value="{Binding NewQuestionPack.TimeLimitInSeconds}"/>
             </StackPanel>
             <Label HorizontalAlignment="Right"
                    Grid.Row="2"
@@ -88,7 +88,8 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="50, 20, 0, 0"
-                        Command="{Binding CreateNewPackCommand}">
+                        Command="{Binding CreateNewPackCommand}"
+                        Click="closeButton_Click">
                 </Button>
             </WrapPanel>
         </Grid>
