@@ -26,6 +26,8 @@ namespace QuizConfigurator.ViewModel
         private string _buttonText2;
         private string _buttonText3;
         private string _buttonText4;
+        private int _timeLeft;
+        private DispatcherTimer _timer;
         public DelegateCommand SelectAnswerCommand { get; }
         public int CurrentQuestionNumber
         {
@@ -90,20 +92,31 @@ namespace QuizConfigurator.ViewModel
                 RaisePropertyChanged();
             }
         }
-
+        public int TimeLeft
+        {
+            get => _timeLeft;
+            set
+            {
+                _timeLeft = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
-            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);  
+            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
         }
         public void StartQuestionGame()
         {
-            this.CorrectGuesses = 0;
-            this.CurrentQuestionNumber = 0;
+            CorrectGuesses = 0;
+            CurrentQuestionNumber = 0;
             RandomizeQuestionCollection();
             GetNextQuestionRoom();
-            this.TotalQuestionAmount = TemporaryQuestionCollection.Count;
+            TotalQuestionAmount = TemporaryQuestionCollection.Count;
         }
         private void RandomizeQuestionCollection()
         {
@@ -112,9 +125,22 @@ namespace QuizConfigurator.ViewModel
         }
         public void GetNextQuestionRoom()
         {
+            TimeLeft = mainWindowViewModel.ActivePack.TimeLimitInSeconds;
+            _timer.Start();
             CurrentQuestionNumber++;
-            this.QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber - 1].Query;
+            QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber - 1].Query;
             RandomizeButtonsForCurrentQuestion();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (TimeLeft > 0)
+            {
+                TimeLeft--;
+            }
+            else
+            {
+                ShowCorrectAnswer();
+            }
         }
         private void RandomizeButtonsForCurrentQuestion()
         {
@@ -146,21 +172,18 @@ namespace QuizConfigurator.ViewModel
             {
                 string buttonText = button.Content.ToString();
 
-                CheckIfCorrectAnswer(buttonText);
+                ShowCorrectAnswer(buttonText);
             }
         }
-        public void CheckIfCorrectAnswer(string yourAnswer)
+        public void ShowCorrectAnswer(string yourAnswer = null)
         {
             // turn all buttons red and green
-            if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer)
+            if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer && yourAnswer != null)
             {
-                //score++
-                GetNextQuestionRoom();
+                //score++ 
             }
-            else
-            {
-                GetNextQuestionRoom();
-            }
+            _timer.Stop();
+            GetNextQuestionRoom();
         }
     }
 }

@@ -91,5 +91,13 @@
                 Content="{Binding PlayerViewModel.ButtonText4}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                 Command="{Binding PlayerViewModel.SelectAnswerCommand}"/>
+        <Label x:Name="timeCounterLabel"
+               Grid.Column="3"
+               Grid.Row="0"
+               Content="{Binding PlayerViewModel.TimeLeft}"
+               HorizontalContentAlignment="Right"
+               VerticalContentAlignment="Top"
+               FontSize="30"
+               Margin="0, -5, 0, 0"/>
     </Grid>
 </UserControl>
