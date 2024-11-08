@@ -13,12 +13,9 @@ namespace QuizConfigurator.ViewModel
     internal class ConfigurationViewModel : ViewModelBase
     {
         private readonly MainWindowViewModel? mainWindowViewModel;
-
-        private Question _selectedQuestion;
-
         public DelegateCommand AddQuestionCommand { get; }
         public DelegateCommand RemoveQuestionCommand { get; }
-
+        private Question _selectedQuestion;
         public Question SelectedQuestion
         {
             get => _selectedQuestion;
@@ -28,7 +25,7 @@ namespace QuizConfigurator.ViewModel
                 RaisePropertyChanged();
             }
         }
-        public string? ActivePackName => mainWindowViewModel?.ActivePack?.Name;
+        //public string? ActivePackName => mainWindowViewModel?.ActivePack?.Name;
 
         public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
         {
@@ -37,16 +34,17 @@ namespace QuizConfigurator.ViewModel
             AddQuestionCommand = new DelegateCommand(AddQuestion, CanAddQuestion);
             RemoveQuestionCommand = new DelegateCommand(RemoveQuestion, CanRemoveQuestion);
         }
-        public bool CanAddQuestion(object? arg) => true;
+        public bool CanAddQuestion(object? arg) => mainWindowViewModel?.Packs.Count > 0;
         public void AddQuestion(object obj)
         {
             mainWindowViewModel?.ActivePack?.Questions.Add(new Question("New Question", "", "", "", ""));
-            //RaisePropertyChanged();
+            mainWindowViewModel?.UpdateAllCommands();
         }
         public bool CanRemoveQuestion(object? arg) => mainWindowViewModel?.ActivePack?.Questions.Count > 0;
         public void RemoveQuestion(object? obj)
         {
             mainWindowViewModel?.ActivePack?.Questions.Remove(SelectedQuestion);
+            mainWindowViewModel?.UpdateAllCommands();
         }
     }
 }

@@ -8,6 +8,9 @@ using System.Security.RightsManagement;
 using System.IO;
 using System.Xml;
 using static System.Windows.Forms.Design.AxImporter;
+using System.Collections.ObjectModel;
+using QuizConfigurator.ViewModel;
+using System.Configuration;
 
 namespace QuizConfigurator.Model
 {
@@ -23,6 +26,7 @@ namespace QuizConfigurator.Model
                 Directory.CreateDirectory(labb3FolderPath);
             }
             string jsonFilePath = Path.Combine(labb3FolderPath, "Labb3QuestionPacks.json");
+            string otherFilePath = Path.Combine(labb3FolderPath, "Configuration.json");
             SavedPath = jsonFilePath;
             if (!File.Exists(jsonFilePath))
             {
@@ -97,18 +101,20 @@ namespace QuizConfigurator.Model
                 };
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string json = JsonSerializer.Serialize(questionPack, options);
-                File.WriteAllText(jsonFilePath, json);
+                File.WriteAllText(SavedPath, json);
             }         
         }
         public List<QuestionPack> Load()
         {
-            string json = File.ReadAllText(SavedPath);
-            var uggabugga = JsonSerializer.Deserialize<List<QuestionPack>>(json);
-            return uggabugga!;
+            string read = File.ReadAllText(SavedPath);
+            var json = JsonSerializer.Deserialize<List<QuestionPack>>(read);
+            return json!;
         }
-        public void Save()
+        public void Save(ObservableCollection<QuestionPackViewModel> packs)
         {
-            //serializing
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(packs, options);
+            File.WriteAllText(SavedPath, json);
         }
     }
 }

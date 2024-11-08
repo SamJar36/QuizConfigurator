@@ -95,8 +95,7 @@ namespace QuizConfigurator.ViewModel
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
-            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);
-            StartQuestionGame();
+            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);  
         }
         public void StartQuestionGame()
         {

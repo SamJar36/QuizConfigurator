@@ -19,11 +19,8 @@ namespace QuizConfigurator.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
-        private int currentPackNumber;
         public QuestionPack NewQuestionPack { get; set; }
-
-        private QuestionPackViewModel? _activePack;
+        public Configuration Config { get; set; }
         public PlayerViewModel PlayerViewModel { get; }
         public ConfigurationViewModel ConfigurationViewModel { get; }
 
@@ -35,6 +32,26 @@ namespace QuizConfigurator.ViewModel
         public DelegateCommand CreateNewPackCommand { get; }
         public DelegateCommand SwitchActivePackCommand { get; }
         public DelegateCommand DeleteActivePackCommand { get; }
+        private ObservableCollection<QuestionPackViewModel> _packs;
+        public ObservableCollection<QuestionPackViewModel> Packs
+        {
+            get => _packs;
+            set
+            {
+                _packs = value;
+                RaisePropertyChanged();
+            }
+        }
+        private Question _selectedQuestion;
+        public Question SelectedQuestion
+        {
+            get => _selectedQuestion;
+            set
+            {
+                _selectedQuestion = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private string _currentView;
         public string CurrentView
@@ -46,6 +63,7 @@ namespace QuizConfigurator.ViewModel
                 RaisePropertyChanged();
             }
         }
+        private QuestionPackViewModel? _activePack;
         public QuestionPackViewModel? ActivePack
         {
             get => _activePack;
@@ -60,22 +78,22 @@ namespace QuizConfigurator.ViewModel
             CurrentView = "Configuration";
 
             //Load from json file
-            Configuration config = new Configuration();
-            var loadedQuestionPacks = config.Load();
+            Config = new Configuration();
+            var loadedQuestionPacks = Config.Load();
 
             //ViewModels
-            ActivePack = new QuestionPackViewModel(loadedQuestionPacks[0]);
+            Packs = new ObservableCollection<QuestionPackViewModel>();
+            if (loadedQuestionPacks != null && loadedQuestionPacks.Count > 0)
+            {
+                foreach (var questionpack in loadedQuestionPacks)
+                {
+                    QuestionPackViewModel newPack = new QuestionPackViewModel(questionpack);
+                    Packs.Add(newPack);
+                }
+            }
+            ActivePack = Packs.FirstOrDefault();
             PlayerViewModel = new PlayerViewModel(this);
             ConfigurationViewModel = new ConfigurationViewModel(this);
-
-            //Packs
-            Packs = new ObservableCollection<QuestionPackViewModel>();
-            foreach (var questionpack in loadedQuestionPacks)
-            {
-                QuestionPackViewModel newPack = new QuestionPackViewModel(questionpack);
-                Packs.Add(newPack);
-            }
-            currentPackNumber = 0;
 
             //Commands
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
@@ -91,50 +109,53 @@ namespace QuizConfigurator.ViewModel
 
         public void ExitProgram(object obj)
         {
+            Config.Save(Packs);
+            UpdateAllCommands();
             System.Windows.Application.Current.Shutdown();
         }
-        public bool CanOpenOptions(object? arg) => true;
+        public bool CanOpenOptions(object? arg) => Packs.Count > 0;
         public void OpenOptions(object obj)
         {
             PackOptionsDialog optionsWindow = new PackOptionsDialog();
             optionsWindow.ShowDialog();
+            UpdateAllCommands();
         }
         public bool CanSwitchToConfigurationView(object? arg) => CurrentView == "Player";
         public void SwitchToConfigurationView(object obj)
         {
             CurrentView = "Configuration";
+            UpdateAllCommands();
         }
         public bool CanSwitchToPlayerView(object? arg) => CurrentView == "Configuration";
         public void SwitchToPlayerView(object obj)
         {
             CurrentView = "Player";
             PlayerViewModel.StartQuestionGame();
+            UpdateAllCommands();
         }
         public bool CanOpenCreateNewPackWindow(object? arg) => true;
         public void OpenCreateNewPackWindow(object obj)
         {
             NewQuestionPack = new QuestionPack("<Pack Name>");
-            //TempName = newQuestionPack.Name;
-            //TempDifficulty = newQuestionPack.Difficulty;
-            //TempTime = newQuestionPack.TimeLimitInSeconds;
             CreateNewPackDialog createPackWindow = new CreateNewPackDialog();
             createPackWindow.ShowDialog();
+            UpdateAllCommands();
         }
         public bool CanCreateNewPack(object? arg) => true;
         public void CreateNewPack(object obj)
         {
             ActivePack = new QuestionPackViewModel(NewQuestionPack);
             Packs.Add(ActivePack);
-            currentPackNumber = Packs.IndexOf(ActivePack);
+            UpdateAllCommands();
         }
-        public bool CanSwitchActivePack(object? arg) => true;
+        public bool CanSwitchActivePack(object? arg) => Packs.Count > 0;
         public void SwitchActivePack(object obj)
         {
             if (obj is QuestionPackViewModel selectedPack)
             {
                 ActivePack = selectedPack;
-                currentPackNumber = Packs.IndexOf(selectedPack);
             }
+            UpdateAllCommands();
         }
         public bool CanDeleteActivePack(object? arg) => Packs.Count > 0;
         public void DeleteActivePack(object obj)
@@ -142,16 +163,20 @@ namespace QuizConfigurator.ViewModel
             var result = MessageBox.Show("Are you sure you want to delete this question pack?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                Packs.RemoveAt(currentPackNumber);
-                if (Packs.Count > 0)
-                {
-                    ActivePack = Packs[0];
-                }
-                else
-                {
-                    ActivePack = null;
-                }
+                Packs.Remove(ActivePack);
+                ActivePack = Packs.FirstOrDefault();
             }
+            UpdateAllCommands();
+        }
+        public void UpdateAllCommands()
+        {
+            SwitchToPlayerViewCommand.RaiseCanExecuteChanged();
+            SwitchToConfigurationViewCommand.RaiseCanExecuteChanged();
+            SwitchActivePackCommand.RaiseCanExecuteChanged();
+            DeleteActivePackCommand.RaiseCanExecuteChanged();
+            OpenPackOptionsWindowCommand.RaiseCanExecuteChanged();
+            ConfigurationViewModel.AddQuestionCommand.RaiseCanExecuteChanged();
+            ConfigurationViewModel.RemoveQuestionCommand.RaiseCanExecuteChanged();
         }
     }
 }

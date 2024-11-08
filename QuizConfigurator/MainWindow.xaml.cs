@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace QuizConfigurator
 {
@@ -23,6 +24,14 @@ namespace QuizConfigurator
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                viewModel.UpdateAllCommands();
+                viewModel.Config.Save(viewModel.Packs);
+            }
+        }
     }
 }
 
@@ -32,11 +41,8 @@ namespace QuizConfigurator
 // Move pack options method to configurationviewmode
 // dialog not center screen but center on window
 
-//fix play/edit bug
 //time limit
 //when last question go to score screen
 //score screen (play again, exit, score)
-//exiting saves the question pack to json
-//if button is blank in SelectButton, dont crash game
-// new question pack function
 // some sort of pause inbetween clicking on buttons and next room
+// text in question too big

@@ -7,6 +7,7 @@
         xmlns:view="clr-namespace:QuizConfigurator.View"
         mc:Ignorable="d"
         Title="Quiz Configurator" Height="500" Width="800"
+        Closing="Window_Closing"
         MinWidth="710"
         MinHeight="450">
     <Window.InputBindings>
