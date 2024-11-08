@@ -54,7 +54,8 @@
                 FontSize="15"
                 Content="{Binding PlayerViewModel.ButtonText1}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                Command="{Binding PlayerViewModel.SelectAnswerCommand}"/>
+                Command="{Binding PlayerViewModel.SelectAnswerCommand}"
+                Background="{Binding PlayerViewModel.ButtonColors[0]}"/>
         <Button x:Name="topRightButton"
                 Grid.Column="2"
                 Grid.Row="2"
@@ -66,7 +67,8 @@
                 FontSize="15"
                 Content="{Binding PlayerViewModel.ButtonText2}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                Command="{Binding PlayerViewModel.SelectAnswerCommand}"/>
+                Command="{Binding PlayerViewModel.SelectAnswerCommand}"
+                Background="{Binding PlayerViewModel.ButtonColors[1]}"/>
         <Button x:Name="bottomLeftButton"
                 Grid.Column="1"
                 Grid.Row="3"
@@ -78,7 +80,8 @@
                 FontSize="15"
                 Content="{Binding PlayerViewModel.ButtonText3}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                Command="{Binding PlayerViewModel.SelectAnswerCommand}"/>
+                Command="{Binding PlayerViewModel.SelectAnswerCommand}"
+                Background="{Binding PlayerViewModel.ButtonColors[2]}"/>
         <Button x:Name="bottomRightButton"
                 Grid.Column="2"
                 Grid.Row="3"
@@ -90,7 +93,8 @@
                 FontSize="15"
                 Content="{Binding PlayerViewModel.ButtonText4}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                Command="{Binding PlayerViewModel.SelectAnswerCommand}"/>
+                Command="{Binding PlayerViewModel.SelectAnswerCommand}"
+                Background="{Binding PlayerViewModel.ButtonColors[3]}"/>
         <Label x:Name="timeCounterLabel"
                Grid.Column="3"
                Grid.Row="0"

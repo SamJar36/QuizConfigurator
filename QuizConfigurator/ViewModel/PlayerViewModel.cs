@@ -27,7 +27,11 @@ namespace QuizConfigurator.ViewModel
         private string _buttonText3;
         private string _buttonText4;
         private int _timeLeft;
+        private int _timeLeftNextRoom;
         private DispatcherTimer _timer;
+        private DispatcherTimer _nextRoomTimer;
+        private string[] _buttonColors = new string[4];
+        private bool _canShowCorrectAnswer;
         public DelegateCommand SelectAnswerCommand { get; }
         public int CurrentQuestionNumber
         {
@@ -101,14 +105,45 @@ namespace QuizConfigurator.ViewModel
                 RaisePropertyChanged();
             }
         }
+        public int TimeLeftNextRoom
+        {
+            get => _timeLeftNextRoom;
+            set
+            {
+                _timeLeftNextRoom = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string[] ButtonColors
+        {
+            get => _buttonColors;
+            set
+            {
+                _buttonColors = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool CanShowCorrectAnswer
+        {
+            get => _canShowCorrectAnswer;
+            set
+            {
+                _canShowCorrectAnswer = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
-            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanSelectAnswer);
+            SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanExecuteSelectAnswer);
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
+
+            _nextRoomTimer = new DispatcherTimer();
+            _nextRoomTimer.Interval = TimeSpan.FromSeconds(1);
+            _nextRoomTimer.Tick += Timer_Tick_Until_Next_Room;
         }
         public void StartQuestionGame()
         {
@@ -125,21 +160,37 @@ namespace QuizConfigurator.ViewModel
         }
         public void GetNextQuestionRoom()
         {
+            CanShowCorrectAnswer = true;
             TimeLeft = mainWindowViewModel.ActivePack.TimeLimitInSeconds;
             _timer.Start();
             CurrentQuestionNumber++;
             QuestionText = TemporaryQuestionCollection[CurrentQuestionNumber - 1].Query;
             RandomizeButtonsForCurrentQuestion();
+            ResetButtonColors();
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (TimeLeft > 0)
+            if (TimeLeft > 1)
             {
                 TimeLeft--;
             }
             else
             {
+                TimeLeft = 0;
                 ShowCorrectAnswer();
+            }
+        }
+        private void Timer_Tick_Until_Next_Room(object sender, EventArgs e)
+        {
+            if (TimeLeftNextRoom > 1)
+            {
+                TimeLeftNextRoom--;
+            }
+            else
+            {
+                TimeLeftNextRoom = 0;
+                _nextRoomTimer.Stop();
+                GetNextQuestionRoom();
             }
         }
         private void RandomizeButtonsForCurrentQuestion()
@@ -164,7 +215,7 @@ namespace QuizConfigurator.ViewModel
             this.ButtonText3 = answers[2];
             this.ButtonText4 = answers[3];
         }
-        public bool CanSelectAnswer(object? obj) => true;
+        public bool CanExecuteSelectAnswer(object? obj) => true;
         public void SelectAnswer(object obj)
         {
             var button = obj as Button;
@@ -177,13 +228,34 @@ namespace QuizConfigurator.ViewModel
         }
         public void ShowCorrectAnswer(string yourAnswer = null)
         {
-            // turn all buttons red and green
-            if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer && yourAnswer != null)
+            if (CanShowCorrectAnswer)
             {
-                //score++ 
+                CanShowCorrectAnswer = false;
+                _timer.Stop();
+                TimeLeftNextRoom = 2;
+                _nextRoomTimer.Start();
+                if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer && yourAnswer != null)
+                {
+                    //score++
+                }
+                ShowButtonColors();
+            }  
+        }
+        private void ShowButtonColors()
+        {
+            ButtonColors[0] = ButtonText1 == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer ? "Green" : "Red";
+            ButtonColors[1] = ButtonText2 == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer ? "Green" : "Red";
+            ButtonColors[2] = ButtonText3 == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer ? "Green" : "Red";
+            ButtonColors[3] = ButtonText4 == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer ? "Green" : "Red";
+            RaisePropertyChanged(nameof(ButtonColors));
+        }
+        private void ResetButtonColors()
+        {
+            for (int i = 0; i < ButtonColors.Length; i++)
+            {
+                ButtonColors[i] = "White";
             }
-            _timer.Stop();
-            GetNextQuestionRoom();
+            RaisePropertyChanged(nameof(ButtonColors));
         }
     }
 }
