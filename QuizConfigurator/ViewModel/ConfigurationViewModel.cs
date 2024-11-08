@@ -40,13 +40,13 @@ namespace QuizConfigurator.ViewModel
         public bool CanAddQuestion(object? arg) => true;
         public void AddQuestion(object obj)
         {
-            mainWindowViewModel.ActivePack.Questions.Add(new Question("New Question", "", "", "", ""));
+            mainWindowViewModel?.ActivePack?.Questions.Add(new Question("New Question", "", "", "", ""));
             //RaisePropertyChanged();
         }
-        public bool CanRemoveQuestion(object? arg) => mainWindowViewModel.ActivePack.Questions.Count > 0;
+        public bool CanRemoveQuestion(object? arg) => mainWindowViewModel?.ActivePack?.Questions.Count > 0;
         public void RemoveQuestion(object? obj)
         {
-            mainWindowViewModel.ActivePack.Questions.Remove(SelectedQuestion);
+            mainWindowViewModel?.ActivePack?.Questions.Remove(SelectedQuestion);
         }
     }
 }
