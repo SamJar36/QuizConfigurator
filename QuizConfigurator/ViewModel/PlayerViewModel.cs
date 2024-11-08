@@ -18,7 +18,6 @@ namespace QuizConfigurator.ViewModel
         private readonly MainWindowViewModel? mainWindowViewModel;
 
         private ObservableCollection<Question> TemporaryQuestionCollection { get; set; }
-        public int CorrectGuesses { get; set; }
         private int _totalQuestionAmount;
         private int _currentQuestionNumber;
         private string _questionText;
@@ -32,7 +31,11 @@ namespace QuizConfigurator.ViewModel
         private DispatcherTimer _nextRoomTimer;
         private string[] _buttonColors = new string[4];
         private bool _canShowCorrectAnswer;
+        private bool _areThereQuestionsLeft;
+        private bool _isFinishScreenShowing;
+        private int _correctGuesses;
         public DelegateCommand SelectAnswerCommand { get; }
+        public DelegateCommand RestartQuizCommand { get; }
         public int CurrentQuestionNumber
         {
             get => _currentQuestionNumber;
@@ -132,11 +135,39 @@ namespace QuizConfigurator.ViewModel
                 RaisePropertyChanged();
             }
         }
+        public bool AreThereQuestionsLeft
+        {
+            get => _areThereQuestionsLeft;
+            set
+            {
+                _areThereQuestionsLeft = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool IsFinishScreenShowing
+        {
+            get => _isFinishScreenShowing;
+            set
+            {
+                _isFinishScreenShowing = value;
+                RaisePropertyChanged();
+            }
+        }
+        public int CorrectGuesses
+        {
+            get => _correctGuesses;
+            set
+            {
+                _correctGuesses = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
             SelectAnswerCommand = new DelegateCommand(SelectAnswer, CanExecuteSelectAnswer);
+            RestartQuizCommand = new DelegateCommand(RestartQuiz, CanExecuteRestartQuiz);
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
@@ -147,6 +178,8 @@ namespace QuizConfigurator.ViewModel
         }
         public void StartQuestionGame()
         {
+            AreThereQuestionsLeft = true;
+            IsFinishScreenShowing = false;
             CorrectGuesses = 0;
             CurrentQuestionNumber = 0;
             RandomizeQuestionCollection();
@@ -190,7 +223,16 @@ namespace QuizConfigurator.ViewModel
             {
                 TimeLeftNextRoom = 0;
                 _nextRoomTimer.Stop();
-                GetNextQuestionRoom();
+                if (CurrentQuestionNumber < TemporaryQuestionCollection.Count)
+                {
+                    GetNextQuestionRoom();
+                }
+                else
+                {
+                    AreThereQuestionsLeft = false;
+                    IsFinishScreenShowing = true;
+                    mainWindowViewModel.UpdateAllCommands();
+                }
             }
         }
         private void RandomizeButtonsForCurrentQuestion()
@@ -226,6 +268,12 @@ namespace QuizConfigurator.ViewModel
                 ShowCorrectAnswer(buttonText);
             }
         }
+        public bool CanExecuteRestartQuiz(object? obj) => true;
+        public void RestartQuiz(object obj)
+        {
+            mainWindowViewModel.UpdateAllCommands();
+            StartQuestionGame();
+        }
         public void ShowCorrectAnswer(string yourAnswer = null)
         {
             if (CanShowCorrectAnswer)
@@ -236,7 +284,7 @@ namespace QuizConfigurator.ViewModel
                 _nextRoomTimer.Start();
                 if (yourAnswer == TemporaryQuestionCollection[CurrentQuestionNumber - 1].CorrectAnswer && yourAnswer != null)
                 {
-                    //score++
+                    CorrectGuesses++;
                 }
                 ShowButtonColors();
             }  

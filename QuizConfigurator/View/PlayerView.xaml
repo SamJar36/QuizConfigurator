@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizConfigurator.View"
+             xmlns:con="clr-namespace:QuizConfigurator.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <con:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -28,7 +32,8 @@
                    FontWeight="Bold"
                    Text="{Binding PlayerViewModel.QuestionText}"
                    TextWrapping="Wrap"
-                   TextAlignment="Center"/>
+                   TextAlignment="Center"
+                   Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <TextBlock x:Name="currentQuestionTextBlock"
                    Grid.Column="1"
                    Grid.Row="1"
@@ -37,7 +42,8 @@
                    FontSize="15"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
-                   VerticalAlignment="Bottom">
+                   VerticalAlignment="Bottom"
+                   Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="Question "/>
             <Run Text="{Binding PlayerViewModel.CurrentQuestionNumber}"/>
             <Run Text=" out of "/>
@@ -55,7 +61,8 @@
                 Content="{Binding PlayerViewModel.ButtonText1}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                 Command="{Binding PlayerViewModel.SelectAnswerCommand}"
-                Background="{Binding PlayerViewModel.ButtonColors[0]}"/>
+                Background="{Binding PlayerViewModel.ButtonColors[0]}"
+                Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <Button x:Name="topRightButton"
                 Grid.Column="2"
                 Grid.Row="2"
@@ -68,7 +75,8 @@
                 Content="{Binding PlayerViewModel.ButtonText2}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                 Command="{Binding PlayerViewModel.SelectAnswerCommand}"
-                Background="{Binding PlayerViewModel.ButtonColors[1]}"/>
+                Background="{Binding PlayerViewModel.ButtonColors[1]}"
+                Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <Button x:Name="bottomLeftButton"
                 Grid.Column="1"
                 Grid.Row="3"
@@ -81,7 +89,8 @@
                 Content="{Binding PlayerViewModel.ButtonText3}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                 Command="{Binding PlayerViewModel.SelectAnswerCommand}"
-                Background="{Binding PlayerViewModel.ButtonColors[2]}"/>
+                Background="{Binding PlayerViewModel.ButtonColors[2]}"
+                Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <Button x:Name="bottomRightButton"
                 Grid.Column="2"
                 Grid.Row="3"
@@ -94,7 +103,8 @@
                 Content="{Binding PlayerViewModel.ButtonText4}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                 Command="{Binding PlayerViewModel.SelectAnswerCommand}"
-                Background="{Binding PlayerViewModel.ButtonColors[3]}"/>
+                Background="{Binding PlayerViewModel.ButtonColors[3]}"
+                Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <Label x:Name="timeCounterLabel"
                Grid.Column="3"
                Grid.Row="0"
@@ -102,6 +112,35 @@
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Top"
                FontSize="30"
-               Margin="0, -5, 0, 0"/>
+               Margin="0, -5, 0, 0"
+               Visibility="{Binding PlayerViewModel.AreThereQuestionsLeft, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Complete!"
+                       Margin="0, 100, 0, 0"
+                       FontSize="30"
+                       TextAlignment="Center"
+                       Visibility="{Binding PlayerViewModel.IsFinishScreenShowing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <TextBlock Margin="0, 5, 0, 0"
+                       TextAlignment="Center"
+                       FontSize="15"
+                       Visibility="{Binding PlayerViewModel.IsFinishScreenShowing, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Run Text="You got "/>
+                <Run Text="{Binding PlayerViewModel.CorrectGuesses}"/>
+                <Run Text=" out of "/>
+                <Run Text="{Binding PlayerViewModel.TotalQuestionAmount}"/>
+                <Run Text=" Questions correct!"/>
+            </TextBlock>
+            <Button Content="Restart"
+                    Margin="0, 10, 0, 0"
+                    Width="80"
+                    Height="50"
+                    Command="{Binding PlayerViewModel.RestartQuizCommand}"
+                    Visibility="{Binding PlayerViewModel.IsFinishScreenShowing, Converter={StaticResource BooleanToVisibilityConverter}}">
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

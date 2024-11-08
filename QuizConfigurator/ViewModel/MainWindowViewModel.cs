@@ -179,6 +179,8 @@ namespace QuizConfigurator.ViewModel
             OpenPackOptionsWindowCommand.RaiseCanExecuteChanged();
             ConfigurationViewModel.AddQuestionCommand.RaiseCanExecuteChanged();
             ConfigurationViewModel.RemoveQuestionCommand.RaiseCanExecuteChanged();
+            PlayerViewModel.SelectAnswerCommand.RaiseCanExecuteChanged();
+            PlayerViewModel.RestartQuizCommand.RaiseCanExecuteChanged();
         }
     }
 }
