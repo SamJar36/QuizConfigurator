@@ -19,6 +19,7 @@ namespace QuizConfigurator.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
+        private int currentPackNumber;
 
         private QuestionPackViewModel? _activePack;
         public PlayerViewModel PlayerViewModel { get; }
@@ -31,6 +32,7 @@ namespace QuizConfigurator.ViewModel
         public DelegateCommand OpenNewPackWindowCommand { get; }
         public DelegateCommand CreateNewPackCommand { get; }
         public DelegateCommand SwitchActivePackCommand { get; }
+        public DelegateCommand DeleteActivePackCommand { get; }
 
         private string _currentView;
         public string CurrentView
@@ -70,6 +72,7 @@ namespace QuizConfigurator.ViewModel
                 QuestionPackViewModel newPack = new QuestionPackViewModel(questionpack);
                 Packs.Add(newPack);
             }
+            currentPackNumber = 0;
 
             //Commands
             ExitProgramCommand = new DelegateCommand(ExitProgram, CanExitProgram);
@@ -79,6 +82,7 @@ namespace QuizConfigurator.ViewModel
             OpenNewPackWindowCommand = new DelegateCommand(OpenCreateNewPack, CanOpenCreateNewPack);
             CreateNewPackCommand = new DelegateCommand(CreateNewPack, CanCreateNewPack);
             SwitchActivePackCommand = new DelegateCommand(SwitchActivePack, CanSwitchActivePack);
+            DeleteActivePackCommand = new DelegateCommand(DeleteActivePack, CanDeleteActivePack);
         }
         public bool CanExitProgram(object? arg) => true;
 
@@ -120,6 +124,24 @@ namespace QuizConfigurator.ViewModel
             if (obj is QuestionPackViewModel selectedPack)
             {
                 ActivePack = selectedPack;
+                currentPackNumber = Packs.IndexOf(selectedPack);
+            }
+        }
+        public bool CanDeleteActivePack(object? arg) => Packs.Count > 0;
+        public void DeleteActivePack(object obj)
+        {
+            var result = MessageBox.Show("Are you sure you want to delete this question pack?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                Packs.RemoveAt(currentPackNumber);
+                if (Packs.Count > 0)
+                {
+                    ActivePack = Packs[0];
+                }
+                else
+                {
+                    ActivePack = null;
+                }
             }
         }
     }

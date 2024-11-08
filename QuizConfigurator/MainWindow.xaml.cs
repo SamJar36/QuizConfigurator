@@ -39,7 +39,7 @@ namespace QuizConfigurator
 //exiting or switching packs saves the question pack to json
 //if button is blank in SelectButton, dont crash game
 // new question pack function
-// select question pack function
+
 // delete question pack
 // delete question pack function
 // some sort of pause inbetween clicking on buttons and next room

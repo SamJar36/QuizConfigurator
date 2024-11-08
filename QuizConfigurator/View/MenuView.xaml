@@ -34,8 +34,7 @@
                 </MenuItem>
 
                 <MenuItem Header="_Delete Question Pack"
-                          Command="{Binding DeletePackCommand}"/>
-
+                          Command="{Binding DeleteActivePackCommand}"/>
                 <Separator />
 
                 <MenuItem Header="_Import Questions" />
