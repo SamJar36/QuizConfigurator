@@ -26,7 +26,6 @@ namespace QuizConfigurator.Model
                 Directory.CreateDirectory(labb3FolderPath);
             }
             string jsonFilePath = Path.Combine(labb3FolderPath, "Labb3QuestionPacks.json");
-            string otherFilePath = Path.Combine(labb3FolderPath, "Configuration.json");
             SavedPath = jsonFilePath;
             if (!File.Exists(jsonFilePath))
             {
@@ -35,7 +34,7 @@ namespace QuizConfigurator.Model
                     new
                     {
                         Name = "Default Question Pack",
-                        Difficulty = 1,
+                        Difficulty = 2,
                         TimeLimitInSeconds = 15,
                         Questions = new[]
                         {
@@ -82,7 +81,7 @@ namespace QuizConfigurator.Model
                             },
                             new
                             {
-                                Query = "In Mario 64, which level is in the door all the way to the right when you first enter?",
+                                Query = "What level is first door to the right in Mario 64?",
                                 CorrectAnswer = "Jolly Roger Bay",
                                 IncorrectAnswer1 = "Cool Cool Mountain",
                                 IncorrectAnswer2 = "Bob-omb Battlefield",
@@ -90,7 +89,7 @@ namespace QuizConfigurator.Model
                             },
                             new
                             {
-                                Query = "What is the name of the antagonist who hunts you in the Waterfall zone in Undertale?",
+                                Query = "Name of the one who hunts you through Waterfall in Undertale?",
                                 CorrectAnswer = "Undyne",
                                 IncorrectAnswer1 = "Sans",
                                 IncorrectAnswer2 = "Papyrus",

@@ -34,13 +34,13 @@ namespace QuizConfigurator.ViewModel
             AddQuestionCommand = new DelegateCommand(AddQuestion, CanAddQuestion);
             RemoveQuestionCommand = new DelegateCommand(RemoveQuestion, CanRemoveQuestion);
         }
-        public bool CanAddQuestion(object? arg) => mainWindowViewModel?.Packs.Count > 0;
+        public bool CanAddQuestion(object? arg) => mainWindowViewModel?.Packs.Count > 0 && mainWindowViewModel?.CurrentView != "Player";
         public void AddQuestion(object obj)
         {
             mainWindowViewModel?.ActivePack?.Questions.Add(new Question("New Question", "", "", "", ""));
             mainWindowViewModel?.UpdateAllCommands();
         }
-        public bool CanRemoveQuestion(object? arg) => mainWindowViewModel?.ActivePack?.Questions.Count > 0;
+        public bool CanRemoveQuestion(object? arg) => mainWindowViewModel?.ActivePack?.Questions.Count > 0 && mainWindowViewModel?.CurrentView != "Player";
         public void RemoveQuestion(object? obj)
         {
             mainWindowViewModel?.ActivePack?.Questions.Remove(SelectedQuestion);

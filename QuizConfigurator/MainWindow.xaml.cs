@@ -45,4 +45,3 @@ namespace QuizConfigurator
 //when last question go to score screen
 //score screen (play again, exit, score)
 // some sort of pause inbetween clicking on buttons and next room
-// text in question too big

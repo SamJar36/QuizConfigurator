@@ -113,7 +113,7 @@ namespace QuizConfigurator.ViewModel
             UpdateAllCommands();
             System.Windows.Application.Current.Shutdown();
         }
-        public bool CanOpenOptions(object? arg) => Packs.Count > 0;
+        public bool CanOpenOptions(object? arg) => Packs.Count > 0 && CurrentView != "Player";
         public void OpenOptions(object obj)
         {
             PackOptionsDialog optionsWindow = new PackOptionsDialog();
@@ -133,7 +133,7 @@ namespace QuizConfigurator.ViewModel
             PlayerViewModel.StartQuestionGame();
             UpdateAllCommands();
         }
-        public bool CanOpenCreateNewPackWindow(object? arg) => true;
+        public bool CanOpenCreateNewPackWindow(object? arg) => CurrentView != "Player";
         public void OpenCreateNewPackWindow(object obj)
         {
             NewQuestionPack = new QuestionPack("<Pack Name>");
@@ -141,14 +141,14 @@ namespace QuizConfigurator.ViewModel
             createPackWindow.ShowDialog();
             UpdateAllCommands();
         }
-        public bool CanCreateNewPack(object? arg) => true;
+        public bool CanCreateNewPack(object? arg) => CurrentView != "Player";
         public void CreateNewPack(object obj)
         {
             ActivePack = new QuestionPackViewModel(NewQuestionPack);
             Packs.Add(ActivePack);
             UpdateAllCommands();
         }
-        public bool CanSwitchActivePack(object? arg) => Packs.Count > 0;
+        public bool CanSwitchActivePack(object? arg) => Packs.Count > 0 && CurrentView != "Player";
         public void SwitchActivePack(object obj)
         {
             if (obj is QuestionPackViewModel selectedPack)
@@ -157,7 +157,7 @@ namespace QuizConfigurator.ViewModel
             }
             UpdateAllCommands();
         }
-        public bool CanDeleteActivePack(object? arg) => Packs.Count > 0;
+        public bool CanDeleteActivePack(object? arg) => Packs.Count > 0 && CurrentView != "Player";
         public void DeleteActivePack(object obj)
         {
             var result = MessageBox.Show("Are you sure you want to delete this question pack?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -170,6 +170,8 @@ namespace QuizConfigurator.ViewModel
         }
         public void UpdateAllCommands()
         {
+            OpenNewPackWindowCommand.RaiseCanExecuteChanged();
+            CreateNewPackCommand.RaiseCanExecuteChanged();
             SwitchToPlayerViewCommand.RaiseCanExecuteChanged();
             SwitchToConfigurationViewCommand.RaiseCanExecuteChanged();
             SwitchActivePackCommand.RaiseCanExecuteChanged();
