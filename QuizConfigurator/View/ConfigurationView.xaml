@@ -28,17 +28,23 @@
                     Margin="0, 6, 6, 3"
                     Width="15"
                     Height="15"
-                    Command="{Binding OpenPackOptionsWindowCommand}"/>
+                    Command="{Binding OpenPackOptionsWindowCommand}">
+                <Image Source="QuizConfiguration;Component/Assets/options.png"/>
+            </Button>
             <Button x:Name="addButton"
                     Margin="0, 6, 6, 3"
                     Width="15"
                     Height="15"
-                    Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+                    Command="{Binding ConfigurationViewModel.AddQuestionCommand}">
+                <Image Source="QuizConfiguration;Component/Assets/plus.png"/>
+            </Button>
             <Button x:Name="removeButton"
                     Margin="0, 6, 6, 3"
                     Width="15"
                     Height="15"
-                    Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+                    Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}">
+                <Image Source="QuizConfiguration;Component/Assets/minus.png"/>
+            </Button>
         </WrapPanel>
 
         <!--ListBox-->

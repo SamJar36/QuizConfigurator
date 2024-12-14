@@ -19,7 +19,9 @@
                           Icon="{fa:Icon floppyDisk}"
                           Command="{Binding OpenNewPackWindowCommand}"/>
 
-                <MenuItem Header="_Select Question Pack" ItemsSource="{Binding Packs}">
+                <MenuItem Header="_Select Question Pack" 
+                          ItemsSource="{Binding Packs}"
+                          Icon="{fa:Icon check}">
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem">
                             <Setter Property="Command" Value="{Binding DataContext.SwitchActivePackCommand, RelativeSource={RelativeSource AncestorType=MenuItem}}" />
@@ -34,15 +36,18 @@
                 </MenuItem>
 
                 <MenuItem Header="_Delete Question Pack"
+                          Icon="{fa:Icon trash}"
                           Command="{Binding DeleteActivePackCommand}"/>
                 <Separator />
 
-                <MenuItem Header="_Import Questions" />
+                <MenuItem Header="_Import Questions"
+                          Icon="{fa:Icon file}"/>
 
                 <Separator />
 
                 <MenuItem Header="E_xit"
                           Command="{Binding ExitProgramCommand}"
+                          Icon="{fa:Icon xmark}"
                           InputGestureText="Alt+F4"/>
 
             </MenuItem>
@@ -50,19 +55,25 @@
             <MenuItem Header="_Edit">
 
                 <MenuItem Header="_Add Question"
+                          Icon="{fa:Icon plus}"
                           Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
                 <MenuItem Header="_Remove question"
+                          Icon="{fa:Icon minus}"
                           Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
                 <MenuItem Header="Pack _Options"
+                          Icon="{fa:Icon bars}"
                           Command="{Binding OpenPackOptionsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play"
+                          Icon="{fa:Icon play}"
                           Command="{Binding SwitchToPlayerViewCommand}"/>
                 <MenuItem Header="Ed_it"
+                          Icon="{fa:Icon pause}"
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
                 <Separator/>
                 <MenuItem Header="_Fullscreen"
+                          Icon="{fa:Icon expand}"
                           Click="FullScreen_Click"/>
             </MenuItem>
         </Menu>
