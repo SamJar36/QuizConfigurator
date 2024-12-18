@@ -29,21 +29,30 @@
                     Width="15"
                     Height="15"
                     Command="{Binding OpenPackOptionsWindowCommand}">
-                <Image Source="QuizConfiguration;Component/Assets/options.png"/>
+                <TextBlock Text="=" 
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Margin="0, -3, 0, 0"/>
             </Button>
             <Button x:Name="addButton"
                     Margin="0, 6, 6, 3"
                     Width="15"
                     Height="15"
                     Command="{Binding ConfigurationViewModel.AddQuestionCommand}">
-                <Image Source="QuizConfiguration;Component/Assets/plus.png"/>
+                <TextBlock Text="+"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Margin="0, -6, 0, 0"/>
             </Button>
             <Button x:Name="removeButton"
                     Margin="0, 6, 6, 3"
                     Width="15"
                     Height="15"
                     Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}">
-                <Image Source="QuizConfiguration;Component/Assets/minus.png"/>
+                <TextBlock Text="-"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Margin="0, -6, 0, 0"/>
             </Button>
         </WrapPanel>
 

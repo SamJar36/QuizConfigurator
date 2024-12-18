@@ -23,7 +23,7 @@
     <Resource Include="Assets\letter-q.ico" />
     <Resource Include="Assets\minus.png" />
     <Resource Include="Assets\options.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\plus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
