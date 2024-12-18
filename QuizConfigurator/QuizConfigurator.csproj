@@ -10,9 +10,6 @@
 
   <ItemGroup>
     <None Remove="Assets\letter-q.ico" />
-    <None Remove="Assets\minus.png" />
-    <None Remove="Assets\options.png" />
-    <None Remove="Assets\plus.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,13 +18,6 @@
 
   <ItemGroup>
     <Resource Include="Assets\letter-q.ico" />
-    <Resource Include="Assets\minus.png" />
-    <Resource Include="Assets\options.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\plus.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

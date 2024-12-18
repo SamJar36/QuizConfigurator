@@ -32,6 +32,7 @@ namespace QuizConfigurator.ViewModel
         public DelegateCommand CreateNewPackCommand { get; }
         public DelegateCommand SwitchActivePackCommand { get; }
         public DelegateCommand DeleteActivePackCommand { get; }
+        public DelegateCommand ImportQuestionsCommand { get; }
         private ObservableCollection<QuestionPackViewModel> _packs;
         public ObservableCollection<QuestionPackViewModel> Packs
         {
@@ -104,6 +105,12 @@ namespace QuizConfigurator.ViewModel
             CreateNewPackCommand = new DelegateCommand(CreateNewPack, CanCreateNewPack);
             SwitchActivePackCommand = new DelegateCommand(SwitchActivePack, CanSwitchActivePack);
             DeleteActivePackCommand = new DelegateCommand(DeleteActivePack, CanDeleteActivePack);
+            ImportQuestionsCommand = new DelegateCommand(ImportQuestionPack, CanImportQuestionPack);
+        }
+        public bool CanImportQuestionPack(object? arg) => false;
+        public void ImportQuestionPack(object? obj)
+        {
+            // do something
         }
         public bool CanExitProgram(object? arg) => true;
 
